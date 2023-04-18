@@ -49,6 +49,7 @@ urlpatterns = [
   
   path('orders/', views.orders, name='orders'),
   path('update_order/<int:id>',views.update_order,name="update_order"),
+  path('adminorderDetails/<int:order_id>/',views.adminorderDetails, name='adminorderDetails'),
   
   
   path('sales_report/',views.sales_report,name="sales_report"),

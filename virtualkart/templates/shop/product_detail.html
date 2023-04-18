@@ -66,7 +66,7 @@
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star-half-o"></i>
-                                {% comment %} <span>(18 reviews)</span> {% endcomment %}
+                             {% comment %} <span>(18 reviews)</span>  {% endcomment %}
                             </div>
                             <div class="product__details__price" id='price'>
                                 {% if product.offer_price < product.price %}
@@ -78,9 +78,9 @@
                             <p>{{product.description}}</p>
                              <div class="product__details__quantity">
                                 <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
+                                    {% comment %} <div class="pro-qty">
+                                        {% comment %} <input type="text" value="1"> 
+                                    </div> {% endcomment %}
                                 </div>
                             </div>
 
@@ -89,25 +89,9 @@
                             <h3  class="danger-btn">OUT OF STOCK</h3>
 
                             {% elif not product.variation_set.sizes %}
+                        
 
-                            <h3  class="danger-btn">Item not avialable</h3>
-
-                            {% else %}
-                                <div class="d-flex mb-2">
-                                    <h4>Size :</h4>
-                                    <select class="ml-2" id="size" name="size" required  onchange="getval(this);">
-                                        <option value="" disabled selected>Size</option>
-
-                                        {% for i in product.variation_set.sizes %}
-
-                                        <option value="{{i.variation_value}}">{{i.variation_value}}</option>
-
-                                        {% endfor %}
-
-                                    </select>
-                                </div>
-
-                                 {% if in_cart %}
+                            {% if in_cart %}
 
                                 <h3  class="info-btn">ADDED TO BASKET</h3>
                                 <a href="{% url 'cart' %}" class="btn primary-btn">VIEW BASKET</a>
@@ -118,13 +102,44 @@
 
                                  {% endif %} 
 
+
+                            {% else %}
+
+                                <div class="d-flex mb-2">
+                                    <h4>Size :</h4>
+                                    <select class="ml-2" id="size" name="size"   onchange="getval(this);" required >
+                                        {% comment %} <option value="choose_size" disabled selected>Choose Size</option> {% endcomment %}
+
+                                        {% for i in product.variation_set.sizes %}
+
+                                        <option value="{{i.variation_value}}" required >{{i.variation_value}}</option>
+
+                                        {% endfor %}
+
+                                    </select>
+                                </div>
+                                
+
+                                 {% if in_cart %}
+                                 
+                                <h3  class="info-btn">ADDED TO BASKET</h3>
+                                <a href="{% url 'cart' %}" class="btn primary-btn">VIEW BASKET</a>
+
+                                {% else %} 
+
+
+                                <a href="{% url 'add_cart' product.id %}" button type="submit" class="btn primary-btn">ADD TO BASKET</button></a>
+
+
+                                 {% endif %} 
+
                             {% endif %}
                             <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> 
                             <ul>
                                 <li><b>Availability</b>
                                     {% if product.stock <= 0 %}
                                         <span>Out of Stock</span></li>
-                                    {% elif not product.variation_set.size %}
+                                    {% elif  product.variation_set.size %}
                                         <span>Item not avialable</span></li>
                                     {% else %} 
                                         <span>In Stock</span></li>

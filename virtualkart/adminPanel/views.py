@@ -14,7 +14,7 @@ from .forms import LoginForm, ProductForm, CategoryForm, SubCategoryForm, UserFo
 from accounts.models import Account
 from shop.models import Product, Variation
 from category.models import Category, Sub_Category
-from orders.models import Order, Payment, Coupon
+from orders.models import Order,OrderProduct, Payment, Coupon
 
 from django.http import HttpResponse
 from django.template.loader import get_template
@@ -616,6 +616,22 @@ def update_order(request, id):
     order.save()
     
   return redirect('orders')
+
+@staff_member_required(login_url = 'adminLogin')
+def adminorderDetails(request,order_id):
+    order_details = OrderProduct.objects.filter(order__order_number=order_id)
+    order = Order.objects.get(order_number=order_id)
+    subtotal = 0
+    for i in order_details:
+        subtotal += i.product_price * i.quantity
+        
+    context = {
+        'order_details':order_details,
+        'order':order,
+        'subtotal':subtotal    
+    }
+
+    return render(request,'adminPanel/orderDetails.html',context)
 @staff_member_required(login_url= 'adminLogin')
 def sales_report(request):
     year = datetime.now().year

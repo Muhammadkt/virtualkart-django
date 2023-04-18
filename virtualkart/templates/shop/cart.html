@@ -77,8 +77,8 @@
                                     <div class="quantity">
                                         <div class="pro-qty d-flex">
 
-                                         <a href="{% url 'remove_cart' cart_item.product.id cart_item.id %}">
-                                            <button class="btn">-</button></a>
+                                         {% comment %} <a href="{% url 'remove_cart' cart_item.product.id cart_item.id %}">
+                                            <button class="btn">-</button></a> {% endcomment %}
 
                                             <button id="dec-button{{forloop.counter}}" class="btn" data-item='{{cart_item.product.id}}' data-id='{{cart_item.id}}'>-</button>
 
@@ -138,7 +138,7 @@
                           Upadate Cart</a> 
                   </div>
               </div>
-              <div class="col-lg-6">
+              {% comment %} <div class="col-lg-6">
                    <div class="shoping__continue">
                       <div class="shoping__discount">
                           <h5>Discount Codes</h5>
@@ -149,7 +149,7 @@
                       </div>
                   </div> 
               </div>
-              <div class="col-lg-6">
+              <div class="col-lg-6"> {% endcomment %}
                   <div class="shoping__checkout">
                       <h5>Cart Total</h5>
                       <ul>

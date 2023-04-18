@@ -72,7 +72,7 @@ def shop(request, category_slug=None, sub_category_slug=None):
     'products':page_obj,
     'product_count':product_count
   }
-  return render(request, 'shop/shop.html', context)
+  return render(request,'shop/shop.html',context)
 
 
 def product_details(request, category_slug, sub_category_slug, product_slug):

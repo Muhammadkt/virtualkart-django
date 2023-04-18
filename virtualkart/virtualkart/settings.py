@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-oc+jao&j7@61nj$3%42tvf8=_aoad58%hce1chy787r2ap5(6='
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -87,7 +87,9 @@ TEMPLATES = [
                 'shop.context_processors.offer_products2',
                 'shop.context_processors.selling_products1',
                 'shop.context_processors.selling_products2',
-                
+                'cart.context_processors.counter',
+                'cart.context_processors.total',
+                'cart.context_processors.wish_counter'
   
                 
                 
@@ -107,9 +109,11 @@ AUTH_USER_MODEL = 'accounts.Account'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'company',
-        'USER': 'muhammad',
-        'PASSWORD': '1234',
+        'NAME':config('COMPANY'),
+        'USER': config('USER'),
+        'PASSWORD':config('PASSWORD'),
+        'HOST': config('HOST'),
+        'PORT': config('PORT'),
         
         
     }
@@ -187,10 +191,10 @@ MESSAGE_TAGS = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'mcheruvonath@gmail.com'
-EMAIL_HOST_PASSWORD = 'closuyimnugdjhdh'
+EMAIL_PORT  = config('EMAIL_PORT',cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS',cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS=True
 
 RAZORPAY_KEY = config('RAZORPAY_KEY')

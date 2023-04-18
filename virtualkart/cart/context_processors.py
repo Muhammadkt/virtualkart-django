@@ -1,4 +1,5 @@
 from .models import Cart, CartItem
+from shop.models import Wishlist
 from .views import _cart_id
 
 
@@ -9,6 +10,7 @@ def counter(request):
     return {}
   else:
     try:
+      
       cart = Cart.objects.filter(cart_id=_cart_id(request))
       if request.user.is_authenticated:
         cart_items = CartItem.objects.filter(user=request.user)
@@ -17,10 +19,10 @@ def counter(request):
       
       for cart_item in cart_items:
         cart_count += cart_item.quantity
-    
+      
     except Cart.DoesNotExist:
       cart_count=0
-      
+    
   return dict(cart_count=cart_count)
 
 def total(request):
@@ -36,10 +38,21 @@ def total(request):
         cart_items = CartItem.objects.filter(cart=cart[:1])
       
       for cart_item in cart_items:
-        price_mult = int(cart_item.variations.all().values_list('price_multiplier')[0][0])
-        cart_total += int(cart_item.product.offer_price())*int(cart_item.quantity)*price_mult
+        # price_mult = int(cart_item.variations.all().values_list('price_multiplier')[0][0])
+        cart_total += int(cart_item.product.offer_price())*int(cart_item.quantity)
             
-    except Cart.DoesNotExist:
-      cart_total=0
+    except:
+        cart_total=0
       
   return dict(cart_total=cart_total)
+
+
+def wish_counter(request) :
+    wishlist = Wishlist.objects.filter(user=request.user).first()
+    products = wishlist.products.all() if wishlist else []
+    wishlist_count=products.count()
+
+    context = {
+      "wishlist_count" :wishlist_count
+    }
+    return context

@@ -132,8 +132,8 @@
                         <div class="featured__item">
                             <div class="featured__item__pic set-bg" data-setbg="{{product.image_1.url}}">
                                 <ul class="featured__item__pic__hover">
-                                     <button style="background-color: transparent; border-color: transparent;" type="submit"><a href="{% url 'add_wishlist' product.id %}"><span class="icon_heart_alt"></span></a></li></button>
-                                      
+                                     {% comment %} <button  type="submit"><a href="{% url 'add_wishlist' product.id %}"><span class="icon_heart_alt"></span></a></li></button> {% endcomment %}
+                                     <li><a href="{% url 'add_wishlist' product.id %}"><i class="icon_heart_alt"></i></a></li>  
                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                                     <li><a href="{{product.get_url}}"><i class="fa fa-eye"></i></a></li>
                                 </ul>

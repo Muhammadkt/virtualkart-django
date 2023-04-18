@@ -31,8 +31,9 @@
       {% for order in orders %}
 
       <tr style="height: 50px !important;" class="text-wrap">
-        <th scope="row">
+        <th scope="row"> <a href="{% url 'adminorderDetails'  order.order_number %}"> {{order.order_number}}</th></a>
           <a href="" class="text-white">{{forloop.counter}}</a></th>
+          
         <td>{{order.full_name}}</td>
         <td>{{order.email}}</td>
         <td>₹{{order.order_total}}</td>
